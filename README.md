@@ -7,7 +7,14 @@ HashiCorp tools plugin for [asdf](https://github.com/asdf-vm/asdf) version manag
 ## Install
 
 ```
-asdf plugin-add boundary|consul|nomad|packer|serf|terraform|vault|waypoint https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add boundary  https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add consul    https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add nomad     https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add packer    https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add serf      https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add vault     https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add waypoint  https://github.com/Banno/asdf-hashicorp.git
 ```
 
 ## Use
