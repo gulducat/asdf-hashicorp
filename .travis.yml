@@ -11,14 +11,14 @@ script:
   - asdf plugin-add terraform ./
   - asdf plugin-add vault ./
   - asdf plugin-add waypoint ./
-  - asdf list-all boundary
-  - asdf list-all consul
-  - asdf list-all nomad
-  - asdf list-all packer
-  - asdf list-all serf
-  - asdf list-all terraform
-  - asdf list-all vault
-  - asdf list-all waypoint
+  - asdf list-all boundary | tail
+  - asdf list-all consul | tail
+  - asdf list-all nomad | tail
+  - asdf list-all packer | tail
+  - asdf list-all serf | tail
+  - asdf list-all terraform | tail
+  - asdf list-all vault | tail
+  - asdf list-all waypoint | tail
   - asdf plugin-test boundary ./ 'boundary version'
   - asdf plugin-test consul ./ 'consul version'
   - asdf plugin-test nomad ./ 'nomad version'
