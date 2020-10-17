@@ -13,6 +13,7 @@ set \
 # detect the tool name
 readonly __dirname="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly toolname="$(basename "$(dirname "${__dirname}")")"
+readonly base_url="https://releases.hashicorp.com/${toolname}"
 
 # make a temporary download directory with a cleanup hook
 readonly TMP_DOWNLOAD_DIR="$(mktemp -d -t "asdf_${toolname}_XXXXXX")"
@@ -24,11 +25,16 @@ install () {
   local -r install_path="$3"
 
   local -r bin_install_path="${install_path}/bin"
+  local -r filename="$(get_filename "${version}")"
   local -r download_url="$(get_download_url "${version}")"
-  local -r download_path="${TMP_DOWNLOAD_DIR}/$(get_filename "${version}")"
+  local -r download_path="${TMP_DOWNLOAD_DIR}/${filename}"
 
   echo "Downloading ${toolname} version ${version} from ${download_url}"
   if curl -fs "${download_url}" -o "${download_path}"; then
+
+    echo "Checking ${toolname} sha256sum"
+    check_sha "${version}" "${download_path}" || exit 2  # TODO: exit num?
+
     echo "Cleaning ${toolname} previous binaries"
     rm -rf "${bin_install_path}/${toolname}"
 
@@ -37,26 +43,59 @@ install () {
 
     echo "Extracting ${toolname} archive"
     unzip -qq "${download_path}" -d "${bin_install_path}"
+
   else
     echo "Error: ${toolname} version ${version} not found" >&2
     exit 1
   fi
 }
 
-get_arch () {
+check_sha () {
+  local -r version="$1"
+  local -r filepath="$2"
+  local -r filename="$(basename "${filepath}")"
+
+  local -r file_sha="$(sha256sum "${filepath}" | awk '{print $1}')"
+  local -r url="${base_url}/${version}/${toolname}_${version}_SHA256SUMS"
+  local -r web_sha="$(curl -s "${url}" | grep "${filename}$" | cut -d' ' -f1)"
+
+  echo "${file_sha}"
+  echo "  ^ ${filename}"
+  echo "${web_sha}"
+  echo "  ^ ${url}"
+
+  if [ "${file_sha}" != "${web_sha}" ]; then
+    echo "Error: ${toolname} sha256sum mismatch" >&2
+    return 1
+  fi
+}
+
+get_platform () {
   uname | tr '[:upper:]' '[:lower:]'
+}
+
+get_arch () {
+  local -r machine="$(uname -m)"
+  if [[ $machine == *"arm"* ]]; then
+    echo "arm";
+  elif [[ $machine == *"386"* ]]; then
+    echo "386";
+  else
+    echo "amd64";
+  fi
 }
 
 get_filename () {
   local -r version="$1"
-  local -r platform="$(get_arch)"
-  echo "${toolname}_${version}_${platform}_amd64.zip"
+  local -r platform="$(get_platform)"
+  local -r arch="$(get_arch)"
+  echo "${toolname}_${version}_${platform}_${arch}.zip"
 }
 
 get_download_url () {
   local -r version="$1"
   local -r filename="$(get_filename "${version}")"
-  echo "https://releases.hashicorp.com/${toolname}/${version}/${filename}"
+  echo "${base_url}/${version}/${filename}"
 }
 
 install "${ASDF_INSTALL_TYPE}" "${ASDF_INSTALL_VERSION}" "${ASDF_INSTALL_PATH}"
