@@ -13,6 +13,7 @@ asdf plugin-add nomad     https://github.com/Banno/asdf-hashicorp.git
 asdf plugin-add packer    https://github.com/Banno/asdf-hashicorp.git
 asdf plugin-add serf      https://github.com/Banno/asdf-hashicorp.git
 asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add vagrant   https://github.com/Banno/asdf-hashicorp.git # Linux only
 asdf plugin-add vault     https://github.com/Banno/asdf-hashicorp.git
 asdf plugin-add waypoint  https://github.com/Banno/asdf-hashicorp.git
 ```
