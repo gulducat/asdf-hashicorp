@@ -11,6 +11,7 @@ asdf plugin-add boundary  https://github.com/gulducat/asdf-hashicorp.git
 asdf plugin-add consul    https://github.com/gulducat/asdf-hashicorp.git
 asdf plugin-add nomad     https://github.com/gulducat/asdf-hashicorp.git
 asdf plugin-add packer    https://github.com/gulducat/asdf-hashicorp.git
+asdf plugin-add sentinel  https://github.com/gulducat/asdf-hashicorp.git
 asdf plugin-add serf      https://github.com/gulducat/asdf-hashicorp.git
 asdf plugin-add terraform https://github.com/gulducat/asdf-hashicorp.git
 asdf plugin-add vagrant   https://github.com/gulducat/asdf-hashicorp.git # Linux only
