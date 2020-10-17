@@ -15,7 +15,9 @@ list_all () {
   local v
 
   for v in $(curl -s "https://releases.hashicorp.com/${toolname}/" \
-        | awk -F'[<>]' "/<a href=.*${toolname}_/ {print \$3}"); do
+    | awk -F'[<>]' "/<a href=.*${toolname}_/ {print \$3}" \
+    | grep -v '\.hsm$')
+  do
     version="${v#${toolname}_}"
     if [[ -z "${versions}" ]]; then
       versions="${version}"
