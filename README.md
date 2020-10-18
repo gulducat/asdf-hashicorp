@@ -1,6 +1,6 @@
 # asdf-hashicorp
 
-[![Build Status](https://travis-ci.org/gulducat/asdf-hashicorp.svg?branch=master)](https://travis-ci.org/gulducat/asdf-hashicorp)
+[![Build Status](https://travis-ci.org/gulducat/asdf-hashicorp.svg?branch=main)](https://travis-ci.org/gulducat/asdf-hashicorp)
 
 HashiCorp tools plugin for [asdf](https://github.com/asdf-vm/asdf) version manager
 

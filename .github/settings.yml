@@ -6,7 +6,7 @@ repository:
   has_issues: true
   has_wiki: false
   has_downloads: false
-  default_branch: master
+  default_branch: main
   allow_squash_merge: true
   allow_merge_commit: true
   allow_rebase_merge: true
@@ -16,6 +16,3 @@ labels:
   color: CC0000
 - name: feature
   color: 336699
-collaborators:
-- username: nikolay
-  permission: admin
