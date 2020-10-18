@@ -59,13 +59,14 @@ check_sha () {
   local -r url="${base_url}/${version}/${toolname}_${version}_SHA256SUMS"
   local -r web_sha="$(curl -s "${url}" | grep "${filename}$" | cut -d' ' -f1)"
 
-  echo "${file_sha}"
-  echo "  ^ ${filename}"
-  echo "${web_sha}"
-  echo "  ^ ${url}"
-
   if [ "${file_sha}" != "${web_sha}" ]; then
-    echo "Error: ${toolname} sha256sum mismatch" >&2
+    cat <<MSG >&2
+Error: ${toolname} sha256sum mismatch
+${file_sha}
+  ^ ${filename}
+${web_sha}
+  ^ ${url}
+MSG
     return 1
   fi
 }
